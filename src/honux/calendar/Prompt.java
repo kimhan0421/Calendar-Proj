@@ -92,14 +92,14 @@ public class Prompt {
 		System.out.println("{일정검색}");
 		System.out.println("날짜 입력 (yyyy-MM-dd).");
 		String date = s.next();
-		String plan = "";
-		try {
-			plan = c.searchPlan(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-			System.out.println("일정 검색 중 오류 발생");
+		PlanIteam plan;
+		plan = c.searchPlan(date);
+		if (plan != null) {
+			System.out.println(plan.detail);
+		} else {
+			System.out.println("일정이 없음.");
 		}
-		System.out.println(plan);
+
 	}
 
 	private void cmdRegister(Scanner s, Calendar c) throws ParseException {
@@ -108,14 +108,12 @@ public class Prompt {
 		String date = s.next();
 		String text = " ";
 		System.out.println("일정 입력(문자 끝에 ;을 입력해주세요.)");
-		while (true) {
-			String word = s.next();
-			text += word + " ";
-			if (word.endsWith(";")) {
-				break;
-			}
-
+		String word;
+		while (!(word = s.next()).endsWith(";")) {
+			text += word + "  ";
 		}
+		word = word.replace(";", "");
+		text += word;
 		c.registerPlan(date, text);
 
 	}

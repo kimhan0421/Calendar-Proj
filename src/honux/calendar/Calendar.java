@@ -9,24 +9,21 @@ public class Calendar {
 
 	private static final int[] MAX_DAYS = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	private static final int[] LEAP_MAX_DAYS = { 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-	private HashMap <Date, String> planMap ;
+	private HashMap <Date, PlanIteam> planMap ;
 	
 	public Calendar() {
-		planMap = new HashMap <Date, String>();
+		planMap = new HashMap <Date, PlanIteam>();
 	}
 	
 	
-	public void registerPlan(String strDate, String plan) throws ParseException {
-		
-		Date n_date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
-		//System.out.println(n_date);
-		planMap.put(n_date,plan);
+	public void registerPlan(String strDate, String plan) {
+		PlanIteam p = new PlanIteam(strDate, plan);
+		planMap.put(p.getDate(),p);
 	}
 	
-	public String searchPlan(String strDate) throws ParseException {
-		Date n_date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
-		String plan = planMap.get(n_date);
-		return plan;
+	public PlanIteam searchPlan(String strDate) {
+		Date n_date = PlanIteam.getDatefromString(strDate);
+		return planMap.get(n_date);
 		
 	}
 	public boolean isLeapYear(int year) {
